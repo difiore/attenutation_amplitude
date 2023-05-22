@@ -1,4 +1,4 @@
-sDATE,start_time,location,100db_signal_start,100db_signal_end,signal_dB,noise_start,noise_end,noise_dB,100db_bottom_freq,100db_top_freq,signal_linear,noise_linear,SNR_linear,SNR_dB,Day,distance,Expected,FileName,MicUsed
+DATE,start_time,location,100db_signal_start,100db_signal_end,signal_dB,noise_start,noise_end,noise_dB,100db_bottom_freq,100db_top_freq,signal_linear,noise_linear,SNR_linear,SNR_dB,Day,distance,Expected,FileName,MicUsed
 7/7/2016,11:16:03,SM 50A,14,19,-35.65,44.5,49.5,-66.15,700,1400,2.72E-04,2.43E-07,1.12E+03,30.5,1,50,66.02059991,TOP_20160707_111550.wav,1
 7/7/2016,11:21:03,SM 75A,316,321,-39.01,350,355,-66.32,700,1400,1.26E-04,2.33E-07,5.37E+02,27.3,1,75,62.49877473,TOP_20160707_111550.wav,1
 7/7/2016,11:24:03,SM 75A,495,500,-39.33,479,483,-66.06,700,1400,1.17E-04,2.48E-07,4.70E+02,26.72,1,75,62.49877473,TOP_20160707_111550.wav,1
