@@ -1,9 +1,5 @@
 tonyPAMGuide_Meta <- function(fullfile,...,atype='PSD',plottype='Both',envi='Air',calib=0,ctype = 'TS',Si=-159,Mh=-36,G=0,vADC=1.414,r=50,N=Fs,winname='Hann',lcut=Fs/N,hcut=Fs/2,timestring="",outdir=dirname(fullfile),outwrite=0,disppar=1,welch="",chunksize="",linlog = "Log", StartTime = NA, CallOnset = NA, seconds = NA, channel = 1, windowDirection = "before"){
-  print(str(StartTime))
-  print(str(CallOnset))
-  onset <- as.numeric(difftime(CallOnset, StartTime, units= "secs"))
-  end <- onset + seconds
-  print(str(end))
+  onsetSec <- as.numeric(difftime(CallOnset, StartTime, units= "secs"))
   # StartTime, CallOnset, seconds, channel, and windowDirection added as arguments
   # If these are not specified, then the function should run equivalent to original PAMGuide_Meta function
   # StartTime = real start time of audio file
@@ -42,14 +38,16 @@ tonyPAMGuide_Meta <- function(fullfile,...,atype='PSD',plottype='Both',envi='Air
     cat('StartTime of sample is:', ifelse(!is.na(StartTime),format(StartTime,"%H:%M:%S"),NA), '\n')
     cat('CallOnset is:', ifelse(!is.na(CallOnset),format(CallOnset,"%H:%M:%S"),NA), '\n')
     cat('Window is:', seconds, 'seconds before Call Onset\n')
-    fIN <- readWave(fullfile, header = TRUE, from = CallOnset - StartTime - seconds, to = CallOnset - StartTime, units = "seconds")			#read file header
+    # fIN <- readWave(fullfile, header = TRUE, from = CallOnset - StartTime - seconds, to = CallOnset - StartTime, units = "seconds")			#read file header
+    fIN <- readWave(fullfile, header = TRUE, from = onsetSec - seconds, to = onsetSec, units = "seconds")			#read file header
   } else if (!is.na(CallOnset) & !is.na(StartTime) & !is.na(seconds) & windowDirection == "after") {
   # NEED TO ADD IN CHECK HERE TO ENSURE THAT CallOnset + seconds is not after end of file... save that for later...
     cat('Running function on', seconds, 'second window extracted from file, starting at', format(CallOnset, "%H:%M:%S"), 'up to', format(CallOnset + seconds, "%H:%M:%S"),'...\n')
     cat('StartTime of sample is:', ifelse(!is.na(StartTime),format(StartTime,"%H:%M:%S"),NA), '\n')
     cat('CallOnset is:', ifelse(!is.na(CallOnset),format(CallOnset,"%H:%M:%S"),NA), '\n')
     cat('Window is:', seconds, 'seconds after Call Onset\n')
-    fIN <- readWave(fullfile, header = TRUE, from = CallOnset - StartTime, to = CallOnset - StartTime + seconds, units = "seconds")			#read file header
+    # fIN <- readWave(fullfile, header = TRUE, from = CallOnset - StartTime, to = CallOnset - StartTime + seconds, units = "seconds")			#read file header
+    fIN <- readWave(fullfile, header = TRUE, from = onsetSec, to = onsetSec + seconds, units = "seconds")			#read file header
   } else {
     cat('Cannot run function... Needed parameters are missing...\n')
     # cat('StartTime of sample is:', ifelse(!is.na(StartTime),format(StartTime,"%H:%M:%S"),NA), '\n')
@@ -128,9 +126,11 @@ tonyPAMGuide_Meta <- function(fullfile,...,atype='PSD',plottype='Both',envi='Air
       if (is.na(CallOnset) & is.na(StartTime) & is.na(seconds)) {
         xbit <- readWave(fullfile)						#read file
       } else if (!is.na(CallOnset) & !is.na(StartTime) & !is.na(seconds) & windowDirection == "before") {
-      xbit <- readWave(fullfile, from = CallOnset - StartTime - seconds, to = CallOnset - StartTime, units = "seconds")						#read file
+      # xbit <- readWave(fullfile, from = CallOnset - StartTime - seconds, to = CallOnset - StartTime, units = "seconds")						#read file
+      xbit <- readWave(fullfile, from = onsetSec - seconds, to = onsetSec, units = "seconds")						#read file
       } else if (!is.na(CallOnset) & !is.na(StartTime) & !is.na(seconds) & windowDirection == "after"){
-      xbit <- readWave(fullfile, from = CallOnset - StartTime, to = CallOnset - StartTime + seconds, units = "seconds")						#read file
+      # xbit <- readWave(fullfile, from = CallOnset - StartTime, to = CallOnset - StartTime + seconds, units = "seconds")						#read file
+      xbit <- readWave(fullfile, from = onsetSec, to = onsetSec + seconds, units = "seconds")						#read file
       } else {
 
       }

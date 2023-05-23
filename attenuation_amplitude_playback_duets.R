@@ -29,7 +29,7 @@ lapply(packages, require, character.only = TRUE)    # Load multiple packages
 d <- read_csv("playback_SNRmeasurements_20230519.csv", col_names = TRUE) # Load in file
 
 # Load in PAMGuide package with Tony's revisions
-source("tonyPAMGuide_Meta_revised_AD3.R")
+source("tonyPAMGuide_Meta_revised_AD4.R")
 
 # Variable defines window length that PAMGuide uses for SNR measurements.
 window_length <- 5
