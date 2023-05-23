@@ -1,7 +1,7 @@
 d <- read_csv("Calibrated_RMSlevels_homerangeduets_duetvsnoise_may23.csv", col_names = TRUE) # Load in file
 
 # Load in PAMGuide package with Tony's revisions
-source("tonyPAMGuide_Meta_revised_AD3.R")
+source("tonyPAMGuide_Meta_revised_AD4.R")
 
 # Variable defines window length that PAMGuide uses for SNR measurements.
 window_length <- 5
@@ -16,7 +16,6 @@ d$DATE <- parse_date_time(d$Date, "mdy")
 d$StartTime <- str_split_fixed(d$FileName, "_",3)[,3] # Remove everything before 'HHMMSS.wav' pattern.
 d$StartTime <- gsub(".wav","", d$StartTime) # Remove .wav pattern.
 d$StartTime <- parse_date_time(d$StartTime, "HMS") # Turn HHMMSS into proper date-time.
-
 
 d <- d %>% rowwise() %>% mutate(Calibrated_SPL_Duet = tonyPAMGuide_Meta(fullfile = paste0(path, "/", FileName), atype= "Broadband", StartTime=StartTime, CallOnset=CallOnset, seconds = window_length, windowDirection = "after", lcut= 700, hcut= 1400, calib= 1, ctype= "TS", Mh=-36, G=0, vADC=1.0, plottype= "Stats", channel = MicUsed)["RMSlev"]) # NOTE: Here channel is assigned to be MicUsed
 
