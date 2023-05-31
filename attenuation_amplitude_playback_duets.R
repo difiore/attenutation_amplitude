@@ -34,8 +34,8 @@ source("tonyPAMGuide_Meta_revised_AD4.R")
 # Variable defines window length that PAMGuide uses for SNR measurements.
 window_length <- 5
 
-# Path to location containign recordings.
-d$path <- "~/Downloads/2016 SongMeter Playback Audio"
+# Path to location containing recordings.
+d$path <- "/Users/ad26693/Sync Subset/2016 SongMeter Playback Audio"
 
 # Turn date into YMD format.
 d$DATE <- parse_date_time(d$DATE, "mdy")
@@ -48,7 +48,7 @@ d$StartTime <- parse_date_time(d$StartTime, "HMS") # Turn HHMMSS into proper dat
 d$CallOnset <- parse_date_time(d$start_time, "HMS")
 
 # Calculating RMS levels
-d <- d %>% rowwise() %>% mutate(Calibrated_SPL_Duet = tonyPAMGuide_Meta(fullfile = paste0(path, "/", FileName), atype= "Broadband", StartTime=StartTime, CallOnset=CallOnset, seconds = window_length, windowDirection = "after", lcut= 700, hcut= 1400, calib= 1, ctype= "TS", Mh=-36, G=0, vADC=1.0, plottype= "Stats", channel = MicUsed)["RMSlev"]) # NOTE: Here channel is assigned to be MicUsed
+d <- d %>% rowwise() %>% mutate(Calibrated_SPL_Duet = tonyPAMGuide_Meta(fullfile = paste0(path, "/", FileName), atype= "Broadband", StartTime=StartTime, CallOnset=CallOnset, seconds = window_length, windowDirection = "after", lcut= 700, hcut= 1400, calib= 1, ctype= "TS", Mh=-36, G=0, vADC=1.414, plottype= "Stats", channel = MicUsed)["RMSlev"]) # NOTE: Here channel is assigned to be MicUsed
 
 # Turning lists into integer
 data <- d %>% rowwise() %>% mutate(Calibrated_SPL_Duet = ifelse(!is.null(Calibrated_SPL_Duet[[1]]),Calibrated_SPL_Duet[[1]], NA))
